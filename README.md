@@ -7,7 +7,7 @@
 
 ## **프로젝트 구조**
 
-![Untitled](https://github.com/sammory/basket/issues/1#issue-1508001190)
+![Untitled](https://github.com/sammory/basket/issues/1#issue-1508001190/Untitled.png)
 
 
 ## ERD
