@@ -12,7 +12,7 @@
 
 ## ERD
 
- ![Untitled](https://user-images.githubusercontent.com/113747023/209157251-f116e1b0-74e1-448a-b963-9a7978170218.png)
+![Untitled (1)](https://user-images.githubusercontent.com/113747023/209157974-19b4bf97-06b3-4ea0-bb9b-a85ea9c772fd.png)
 
 ## 사용 기술 스택
 
