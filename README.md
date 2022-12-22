@@ -65,4 +65,4 @@
 
 ## **💪 주차별 개발 계획**
 
-[제목 없음](https://www.notion.so/331a6dbb812642dc90439f639d7d6573)
+(https://www.notion.so/331a6dbb812642dc90439f639d7d6573)
