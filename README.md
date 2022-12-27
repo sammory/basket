@@ -17,7 +17,7 @@
 
 - SpringBoot
 - Java
-- MySQL
+- MariaDB
 - JPA
 
 ## 프로젝트 기능
