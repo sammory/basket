@@ -6,12 +6,12 @@
 
 ## **프로젝트 구조**
 
-![2121](https://user-images.githubusercontent.com/113747023/209793707-42e4b794-0b24-483d-87df-5a1eb725fffe.png)
 
+![1212](https://user-images.githubusercontent.com/113747023/209793587-08b75d91-8c6b-4f20-9d38-74f55977a17a.png)
 
 ## ERD
 
-![Untitled (1)](https://user-images.githubusercontent.com/113747023/209157974-19b4bf97-06b3-4ea0-bb9b-a85ea9c772fd.png)
+![2121](https://user-images.githubusercontent.com/113747023/209793707-42e4b794-0b24-483d-87df-5a1eb725fffe.png)
 
 ## 사용 기술 스택
 
