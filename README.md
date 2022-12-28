@@ -7,7 +7,7 @@
 ## **프로젝트 구조**
 
 
-![1212](https://user-images.githubusercontent.com/113747023/209795560-c00cde19-46ce-4727-9493-2c7835fb775c.png)
+![1212](https://user-images.githubusercontent.com/113747023/209793587-08b75d91-8c6b-4f20-9d38-74f55977a17a.png)
 
 ## ERD
 
