@@ -1,13 +1,13 @@
-package com.zerobase.basket;
+package com.zerobase.zerolms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BasketApplication {
+public class zerolmstApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BasketApplication.class, args);
+        SpringApplication.run(zerolmstApplication.class, args);
     }
 
 }
