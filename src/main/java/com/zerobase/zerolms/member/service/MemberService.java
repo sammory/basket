@@ -1,8 +1,9 @@
 package com.zerobase.zerolms.member.service;
 
 import com.zerobase.zerolms.member.model.MemberInput;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface MemberService {
+public interface MemberService extends UserDetailsService {
 
     boolean register(MemberInput parameter);
 
