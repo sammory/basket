@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 @Entity
-public class Member {
+public class Member implements MemberCode{
 
     @Id
     private String email;
@@ -22,7 +22,6 @@ public class Member {
     private String userName;
     private String phone;
     private String password;
-    private String address;
     private LocalDateTime regDt;
 
     private boolean emailAuthYn;
@@ -34,5 +33,11 @@ public class Member {
     private LocalDateTime resetPasswordLimitDt; // 초기화가능한 날짜 제한 ex) 몇일까지만 초기화가능
 
     private boolean adminYn; // 관리자인지 여부 확인
+
+    private String userStatus; // 이용 가능한상태, 정지상태
+
+    private String zipcode;
+    private String addr;
+    private String addrDetail;
 
 }
