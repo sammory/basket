@@ -30,6 +30,9 @@ public class Member {
     private String emailAuthKey;
 
     private String resetPasswordKey;
-    // 초기화가능한 날짜 제한 ex) 몇일까지만 초기화가능
-    private LocalDateTime resetPasswordLimitDt;
+
+    private LocalDateTime resetPasswordLimitDt; // 초기화가능한 날짜 제한 ex) 몇일까지만 초기화가능
+
+    private boolean adminYn; // 관리자인지 여부 확인
+
 }
