@@ -28,4 +28,8 @@ public class Member {
     private boolean emailAuthYn;
     private LocalDateTime emailAuthDt;
     private String emailAuthKey;
+
+    private String resetPasswordKey;
+    // 초기화가능한 날짜 제한 ex) 몇일까지만 초기화가능
+    private LocalDateTime resetPasswordLimitDt;
 }
