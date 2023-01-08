@@ -34,7 +34,7 @@ public class AdminMemberController {
 
         model.addAttribute("list", members);
         model.addAttribute("totalCount", totalCount);
-        model.addAttribute("pager", pagerUtil);
+        model.addAttribute("pager", pagerUtil.pager());
 
         return "/admin/member/list";
     }

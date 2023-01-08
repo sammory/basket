@@ -94,6 +94,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean sendResetPassword(ResetPasswordInput parameter) {
 
+
         Optional<Member> optionalMember = memberRepository.findByEmailAndUserName(parameter.getEmail(), parameter.getUserName());
         if (!optionalMember.isPresent()) {
             throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
@@ -113,7 +114,6 @@ public class MemberServiceImpl implements MemberService {
                 "<p>아래 링크를 클릭하셔서 비밀번호를 초기화 해주세요.</p>"
                 + "<div><a target='_blank' href='http://localhost:8080/member/reset/password?id=" + uuid + "'> 비밀번호 초기화 링크 </a></div>";
         mailComponents.sendMail(email, subject, text);
-
 
         return true;
     }
