@@ -4,6 +4,7 @@ import com.zerobase.zerolms.admin.dto.MemberDto;
 import com.zerobase.zerolms.admin.model.MemberParam;
 import com.zerobase.zerolms.admin.model.MemberInput;
 import com.zerobase.zerolms.member.service.MemberService;
+import com.zerobase.zerolms.product.controller.BaseController;
 import com.zerobase.zerolms.util.PageUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,13 +16,14 @@ import java.util.List;
 
 @RequiredArgsConstructor // 멤버서비스 가져오기위해 추가 / 생성자 자동생성
 @Controller
-public class AdminMemberController {
+public class AdminMemberController extends BaseController {
 
     private final MemberService memberService;
 
     @GetMapping("/admin/member/list.do")
     public String list(Model model, MemberParam parameter) {
 
+        parameter.init();
         List<MemberDto> members = memberService.list(parameter);
 
         // 페이징
@@ -30,11 +32,11 @@ public class AdminMemberController {
             totalCount = members.get(0).getTotalCount();
         }
         String queryString = parameter.getQueryString();
-        PageUtil pagerUtil = new PageUtil(totalCount, parameter.getPageSize(), parameter.getPageIndex(), queryString);
+        String pagerHtml = getPaperHtml(totalCount, parameter.getPageSize(), parameter.getPageIndex(), queryString);
 
         model.addAttribute("list", members);
         model.addAttribute("totalCount", totalCount);
-        model.addAttribute("pager", pagerUtil.pager());
+        model.addAttribute("pager", pagerHtml);
 
         return "/admin/member/list";
     }

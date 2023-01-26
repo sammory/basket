@@ -1,6 +1,6 @@
 package com.zerobase.zerolms.admin.service;
 
-import com.zerobase.zerolms.admin.categoryDto.CategoryDto;
+import com.zerobase.zerolms.admin.dto.CategoryDto;
 import com.zerobase.zerolms.admin.entity.Category;
 import com.zerobase.zerolms.admin.model.CategoryInput;
 import com.zerobase.zerolms.admin.repository.CategoryRepository;

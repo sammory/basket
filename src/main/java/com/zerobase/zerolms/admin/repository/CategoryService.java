@@ -1,6 +1,6 @@
 package com.zerobase.zerolms.admin.repository;
 
-import com.zerobase.zerolms.admin.categoryDto.CategoryDto;
+import com.zerobase.zerolms.admin.dto.CategoryDto;
 import com.zerobase.zerolms.admin.model.CategoryInput;
 import org.springframework.stereotype.Service;
 

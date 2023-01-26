@@ -1,11 +1,10 @@
 package com.zerobase.zerolms.admin.controller;
 
-import com.zerobase.zerolms.admin.categoryDto.CategoryDto;
+import com.zerobase.zerolms.admin.dto.CategoryDto;
 import com.zerobase.zerolms.admin.model.CategoryInput;
 import com.zerobase.zerolms.admin.model.MemberParam;
 import com.zerobase.zerolms.admin.repository.CategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

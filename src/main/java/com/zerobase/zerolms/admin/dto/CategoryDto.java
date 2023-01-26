@@ -1,4 +1,4 @@
-package com.zerobase.zerolms.admin.categoryDto;
+package com.zerobase.zerolms.admin.dto;
 
 import com.zerobase.zerolms.admin.entity.Category;
 import lombok.AllArgsConstructor;
