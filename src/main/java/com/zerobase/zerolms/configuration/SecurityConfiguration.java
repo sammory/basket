@@ -33,7 +33,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
-
+        // text 상자 폼 가져올때 권한때문에 적용 안됬었음
+        http.headers().frameOptions().sameOrigin();
         // 시큐리티 권한설정 , 권한설정한 페이지는 시큐리티 로그인 없이 이동가능
         http.authorizeRequests()
                 .antMatchers("/"

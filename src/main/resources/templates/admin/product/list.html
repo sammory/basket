@@ -47,7 +47,47 @@
 
     <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
     <script>
+        $(document).ready(function () {
 
+            $('#selectAll').on('click', function () {
+
+                var checked = $(this).is(':checked');
+
+                $('#dateList input[type=checkbox]').each(function (k,v) {
+                    $(this).prop('checked', checked);
+                });
+
+
+            });
+
+            $('#deleteButton').on('click', function () {
+
+                var $checked = $('#dateList input[type=checkbox]:checked');
+                if ($checked.length < 1) {
+                    alert(' 삭제할 데이터를 선택해 주세요. ');
+                    return false;
+                }
+
+                if (!confirm(' 선택한 데이터를 삭제하시겠습니까? ')) {
+                    return false;
+                }
+
+                var idList = [];
+                $.each($checked, function (k,v) {
+                    idList.push($(this).val());
+                });
+
+                console.log(idList);
+                // 문자로 표현 , 으로나눔
+                console.log(idList.join(','));
+
+                var $deleteForm = $('form[name=deleteForm]');
+                $deleteForm.find('input[name=idList]').val(idList.join(','));
+                $deleteForm.submit();
+
+            });
+
+        });
     </script>
 </head>
 
@@ -88,7 +128,7 @@
                     <td th:text="${x.seq}">1</td>
                     <td>
                         <p>
-                            <a th:href="'/admin/course/edit.do?id=' + ${x.id}" th:text="${x.subject}">강좌명</a>
+                            <a th:href="'edit.do?id=' + ${x.id}" th:text="${x.subject}">상품명</a>
                         </p>
                     </td>
                     <td>
@@ -98,10 +138,14 @@
                 </tbody>
         </table>
 
-            </tbody>
-        </table>
+        <div class="pager" th:utext="${pager}">
+        </div>
+
     </div>
 
+<form name="deleteForm" method="post" action="/admin/product/delete.do">
+    <input type="hidden" name="idList"/>
+</form>
 
 </body>
 </html>

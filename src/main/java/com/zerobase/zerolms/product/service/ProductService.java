@@ -14,8 +14,22 @@ public interface ProductService {
     boolean add(ProductInput parameter);
 
     /**
+     * 상품 정보수정
+     */
+    boolean set(ProductInput parameter);
+
+    /**
      * 상품 목록
      */
     List<ProductDto> list(ProductParam parameter);
 
+    /**
+     * 상품 상세정보
+     */
+    ProductDto getById(long id);
+
+    /**
+     * 상품 내용 삭제
+     */
+    boolean del(String idList);
 }
