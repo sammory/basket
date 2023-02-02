@@ -5,5 +5,9 @@ import lombok.Data;
 
 @Data
 public class ProductParam extends CommonParam {
+
+    long id; // product.id
     String email;
+    long categoryId;
+
 }

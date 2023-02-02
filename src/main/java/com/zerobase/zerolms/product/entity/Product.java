@@ -23,7 +23,7 @@ public class Product {
 
     String imagePath;
     String subject;
-    String keyword;
+    String summary;
 
     @Lob
     String contents;

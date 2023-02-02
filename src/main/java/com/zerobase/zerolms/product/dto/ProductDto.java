@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +21,7 @@ public class ProductDto {
     long categoryId;
     String imagePath;
     String subject;
-    String keyword;
+    String summary;
     String contents;
     long price;
     long salePrice;
@@ -37,7 +39,7 @@ public class ProductDto {
                 .categoryId(product.getCategoryId())
                 .imagePath(product.getImagePath())
                 .subject(product.getSubject())
-                .keyword(product.getKeyword())
+                .summary(product.getSummary())
                 .contents(product.getContents())
                 .price(product.getPrice())
                 .salePrice(product.getSalePrice())
@@ -45,5 +47,28 @@ public class ProductDto {
                 .regDt(product.getRegDt())
                 .udtDt(product.getUdtDt())
                 .build();
+    }
+    public static List<ProductDto> of(List<Product> product) {
+
+        if (product == null) {
+            return null;
+        }
+        List<ProductDto> productList = new ArrayList<>();
+        for (Product x : product) {
+            productList.add(ProductDto.of(x));
+        }
+        return productList;
+
+    /*
+        if (product != null) {
+            List<ProductDto> productList = new ArrayList<>();
+            for (Product x : product) {
+                productList.add(ProductDto.of(x));
+            }
+            return productList;
+        }
+        return null;
+
+     */
     }
 }

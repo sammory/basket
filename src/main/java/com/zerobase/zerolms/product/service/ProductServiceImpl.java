@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = Product.builder()
                 .categoryId(parameter.getCategoryId())
                 .subject(parameter.getSubject())
-                .keyword(parameter.getKeyword())
+                .summary(parameter.getSummary())
                 .contents(parameter.getContents())
                 .price(parameter.getPrice())
                 .salePrice(parameter.getSalePrice())
@@ -69,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = optionalProduct.get();
         product.setCategoryId(parameter.getCategoryId());
         product.setSubject(parameter.getSubject());
-        product.setKeyword(parameter.getKeyword());
+        product.setSummary(parameter.getSummary());
         product.setContents(parameter.getContents());
         product.setPrice(parameter.getPrice());
         product.setSalePrice(parameter.getSalePrice());
@@ -122,6 +122,32 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return true;
+    }
+
+    @Override
+    public List<ProductDto> frontList(ProductParam parameter) {
+
+        if (parameter.getCategoryId() < 1) {
+            List<Product> productList = productRepository.findAll();
+            return ProductDto.of(productList);
+        }
+
+        Optional<List<Product>> optionalProducts = productRepository.findByCategoryId(parameter.getCategoryId());
+        if (optionalProducts.isPresent()) {
+            return ProductDto.of(optionalProducts.get());
+        }
+
+        return null;
+    }
+
+    @Override
+    public ProductDto frontDetail(long id) {
+
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        if (optionalProduct.isPresent()) {
+            return ProductDto.of(optionalProduct.get());
+        }
+        return null;
     }
 
 }

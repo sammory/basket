@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 상세 페이지</title>
+    <style>
+        span.price {
+            text-decoration: line-through;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script>
+        $(function () {
+
+            $('#submitForm').on('submit', function () {
+
+                if (!confirm('장바구니에 등록 하시겠습니까?')) {
+                    return false;
+                }
+
+                var $thisForm = $(this);
+                var url = '/api/product/req.api';
+                var parameter = {
+                    courseId: $thisForm.find('input[name=id]').val()
+                };
+                axios.post(url, parameter).then(function (response) {
+                    console.log(response);
+                    console.log(response.data);
+
+                    response.data = response.data || {};
+                    response.data.header = response.data.header || {};
+
+                    if (!response.data.header.result) {
+                        alert(response.data.header.message);
+                        return false;
+                    }
+
+                    //정상적일때
+                    alert(' 상품이 정상적으로 등록되었습니다.');
+                    location.href = "/";
+
+
+                }).catch(function (err) {
+                    console.log(err);
+                });
+
+                return false;
+            });
+
+        });
+
+    </script>
+</head>
+<body>
+    <div th:replace="/fragments/layout.html :: fragment-body-menu" ></div>
+    <h1> 상품 상세 정보 </h1>
+
+    <div>
+        <h2>
+            상품명: <span th:text="${detail.subject}">상품</span>
+            <div th:utext="${detail.contents}">
+            </div>
+            <div>
+                <p>가격: <span th:text="${detail.price}">0</span></p>
+                <p>할인가격: <span th:text="${detail.salePrice}">0</span></p>
+            </div>
+
+<!--            <div>-->
+<!--                <img th:src="${detail.urlFilename}"/>-->
+<!--            </div>-->
+
+            <div>
+                <form id="submitForm" method="post">
+                    <input type="hidden" name="id" th:value="${detail.id}"/>
+                    <button type="submit">장바구니 담기</button>
+                    <a href="/product">상품목록</a>
+                </form>
+            </div>
+        </h2>
+
+    </div>
+
+
+
+
+</body>
+</html>

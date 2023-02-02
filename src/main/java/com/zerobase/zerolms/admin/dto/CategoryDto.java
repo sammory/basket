@@ -21,6 +21,8 @@ public class CategoryDto {
     int sortValue;    // 카테고리 순서
     boolean usingYn;  // 사용가능여부
 
+    // ADD COLUMNS
+    int productCount;
 
     public static List<CategoryDto> of (List<Category> categories) {
         if (categories != null) {

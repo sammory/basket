@@ -32,4 +32,14 @@ public interface ProductService {
      * 상품 내용 삭제
      */
     boolean del(String idList);
+
+    /**
+     * 프론트 상품 목록
+     */
+    List<ProductDto> frontList(ProductParam parameter);
+
+    /**
+     * 프론트 상품 상세 정보
+     */
+    ProductDto frontDetail(long id);
 }

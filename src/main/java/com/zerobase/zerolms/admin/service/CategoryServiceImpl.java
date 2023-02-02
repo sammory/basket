@@ -2,6 +2,7 @@ package com.zerobase.zerolms.admin.service;
 
 import com.zerobase.zerolms.admin.dto.CategoryDto;
 import com.zerobase.zerolms.admin.entity.Category;
+import com.zerobase.zerolms.admin.mapper.CategoryMapper;
 import com.zerobase.zerolms.admin.model.CategoryInput;
 import com.zerobase.zerolms.admin.repository.CategoryRepository;
 import com.zerobase.zerolms.admin.repository.CategoryService;
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     private Sort getSortBySortValueDesc() {
         return Sort.by(Sort.Direction.DESC, "sortValue");
@@ -73,5 +75,10 @@ public class CategoryServiceImpl implements CategoryService {
     public boolean del(long id) {
         categoryRepository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public List<CategoryDto> frontList(CategoryDto parameter) {
+        return categoryMapper.select(parameter);
     }
 }
