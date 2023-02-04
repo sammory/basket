@@ -2,10 +2,14 @@ package com.zerobase.zerolms.product.service;
 
 import com.zerobase.zerolms.product.dto.ProductDto;
 import com.zerobase.zerolms.product.entity.Product;
+import com.zerobase.zerolms.product.entity.TakeProduct;
 import com.zerobase.zerolms.product.mapper.ProductMapper;
 import com.zerobase.zerolms.product.model.ProductInput;
 import com.zerobase.zerolms.product.model.ProductParam;
+import com.zerobase.zerolms.product.model.ServiceResult;
+import com.zerobase.zerolms.product.model.TakeProductInput;
 import com.zerobase.zerolms.product.repository.ProductRepository;
+import com.zerobase.zerolms.product.repository.TakeProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -13,6 +17,7 @@ import org.springframework.util.CollectionUtils;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +26,7 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final TakeProductRepository takeProductRepository;
     private final ProductMapper productMapper;
 
     private LocalDate getLocalDate(String value) {
@@ -148,6 +154,44 @@ public class ProductServiceImpl implements ProductService {
             return ProductDto.of(optionalProduct.get());
         }
         return null;
+    }
+
+    @Override
+    public ServiceResult req(TakeProductInput parameter) {
+
+        ServiceResult result = new ServiceResult();
+
+        Optional<Product> optionalProduct = productRepository.findById(parameter.getProductId());
+        if (!optionalProduct.isPresent()) {
+            result.setResult(false);
+            result.setMessage("상품 정보가 존재하지 않습니다.");
+            return result;
+        }
+
+        Product product = optionalProduct.get();
+
+        // 이미 담겨져 있는 상품이 있는지 확인
+        String[] statusList = {TakeProduct.STATUS_REQ, TakeProduct.STATUS_COMPLETE};
+        long count = takeProductRepository.countByProductIdAndEmailAndStatusIn(product.getId(),
+                parameter.getEmail(), Arrays.asList(statusList));
+        if (count > 0) {
+            result.setResult(false);
+            result.setMessage("이미 담겨있는 상품이 존재합니다.");
+            return result;
+        }
+
+        TakeProduct takeProduct = TakeProduct.builder()
+                .productId(product.getId())
+                .email(parameter.getEmail())
+                .payPrice(product.getSalePrice())
+                .regDt(LocalDateTime.now())
+                .status(TakeProduct.STATUS_REQ)
+                .build();
+        takeProductRepository.save(takeProduct);
+
+        result.setResult(true);
+        result.setMessage("");
+        return result;
     }
 
 }

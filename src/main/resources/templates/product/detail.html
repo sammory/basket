@@ -23,7 +23,7 @@
                 var $thisForm = $(this);
                 var url = '/api/product/req.api';
                 var parameter = {
-                    courseId: $thisForm.find('input[name=id]').val()
+                    productId: $thisForm.find('input[name=id]').val()
                 };
                 axios.post(url, parameter).then(function (response) {
                     console.log(response);

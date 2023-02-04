@@ -3,6 +3,8 @@ package com.zerobase.zerolms.product.service;
 import com.zerobase.zerolms.product.dto.ProductDto;
 import com.zerobase.zerolms.product.model.ProductInput;
 import com.zerobase.zerolms.product.model.ProductParam;
+import com.zerobase.zerolms.product.model.ServiceResult;
+import com.zerobase.zerolms.product.model.TakeProductInput;
 
 import java.util.List;
 
@@ -42,4 +44,9 @@ public interface ProductService {
      * 프론트 상품 상세 정보
      */
     ProductDto frontDetail(long id);
+
+    /**
+     * 장바구니 담기
+     */
+    ServiceResult req(TakeProductInput parameter);
 }
