@@ -164,7 +164,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> optionalProduct = productRepository.findById(parameter.getProductId());
         if (!optionalProduct.isPresent()) {
             result.setResult(false);
-            result.setMessage("상품 정보가 존재하지 않습니다.");
+            result.setMessage("구매요청 정보가 존재하지 않습니다.");
             return result;
         }
 
@@ -176,7 +176,7 @@ public class ProductServiceImpl implements ProductService {
                 parameter.getEmail(), Arrays.asList(statusList));
         if (count > 0) {
             result.setResult(false);
-            result.setMessage("이미 담겨있는 상품이 존재합니다.");
+            result.setMessage("이미 구매요청한 상품이 존재합니다.");
             return result;
         }
 
