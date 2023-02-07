@@ -33,9 +33,9 @@ public class MemberDto {
     boolean adminYn;
     String userStatus;
 
-//    private String zipcode;
-//    private String addr;
-//    private String addrDetail;
+    private String zipcode;
+    private String addr;
+    private String addrDetail;
 
     // 추가컬럼
     long totalCount;
@@ -58,9 +58,9 @@ public class MemberDto {
                 .adminYn(member.isAdminYn())
                 .userStatus(member.getUserStatus())
 
-//                .zipcode(member.getZipcode())
-//                .addr(member.getAddr())
-//                .addrDetail(member.getAddrDetail())
+                .zipcode(member.getZipcode())
+                .addr(member.getAddr())
+                .addrDetail(member.getAddrDetail())
 
                 .build();
     }
