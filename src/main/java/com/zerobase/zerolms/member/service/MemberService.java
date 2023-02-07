@@ -4,6 +4,7 @@ import com.zerobase.zerolms.admin.dto.MemberDto;
 import com.zerobase.zerolms.admin.model.MemberParam;
 import com.zerobase.zerolms.member.model.MemberInput;
 import com.zerobase.zerolms.member.model.ResetPasswordInput;
+import com.zerobase.zerolms.product.model.ServiceResult;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -51,4 +52,16 @@ public interface MemberService extends UserDetailsService {
      * 회원 비밀번호 초기화
      */
     boolean updatePassword(String email, String password);
+
+    /**
+     * 회원정보 수정
+     */
+    ServiceResult updateMember(MemberInput parameter);
+
+    /**
+     * 회원정보 페이지내 비밀번호 변경 기능
+     */
+    ServiceResult updateMemberPassword(MemberInput parameter);
+
+
 }

@@ -2,13 +2,84 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
-        <title>회원 정보</title>
+    <meta charset="UTF-8">
+    <title>회원 정보</title>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+
+            $('#updateForm').on('submit', function () {
+
+                if (!confirm('회원 정보를 수정하시겠습니까?')) {
+                    return false;
+                }
+
+
+            });
+
+        });
+
+    </script>
 </head>
 <body>
-<div th:replace="/fragments/layout.html :: fragment-body-menu" ></div>
+    <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
 
-        <h1> 회원 정보 </h1>
+    <h1> 회원 정보 </h1>
+
+    <div>
+        <hr/>
+        <a href="/member/info">회원 정보 수정</a>
+        |
+        <a href="/member/password">비밀번호 변경</a>
+        |
+        <a href="/member/takepurchase">구매내역</a>
+        <hr/>
+    </div>
+
+    <div>
+        <form id="updateForm" method="post">
+            <table>
+                <tbody>
+                <tr>
+                    <th>아이디(이메일)</th>
+                    <td>
+                        <p th:text="${detail.email}">아이디</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>이름</th>
+                    <td>
+                        <p th:text="${detail.userName}">이름</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>전화번호</th>
+                    <td>
+                        <input name="phone" type="text" th:value="${detail.phone}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>가입일</th>
+                    <td>
+                        <p th:text="${detail.regDtText}">가입일</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>회원정보 수정일</th>
+                    <td>
+                        <p th:text="${detail.udtDtText}">회원정보 수정일</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div>
+                <button type="submit">수정</button>
+                <a href="/member/withdraw"> 회원 탈퇴 </a>
+            </div>
+        </form>
+
+    </div>
 
 
 </body>

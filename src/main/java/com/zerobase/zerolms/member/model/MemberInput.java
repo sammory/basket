@@ -13,4 +13,6 @@ public class MemberInput {
     private String phone;
     private String address;
 
+    private String newPassword;
+
 }

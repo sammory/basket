@@ -9,6 +9,7 @@
 <div th:replace="/fragments/layout.html :: fragment-body-menu" ></div>
 
     <h1> 회원 로그인 </h1>
+    <hr/>
 
     <div th:text="${errorMessage}">
     </div>
@@ -24,6 +25,7 @@
         <div>
             <button type="submit"> 로그인 </button>
         </div>
+        <hr/>
         <div>
             <a href="/member/find-password"> 비밀번호 찾기 </a>
         </div>

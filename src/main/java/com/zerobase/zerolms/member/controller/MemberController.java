@@ -1,9 +1,10 @@
 package com.zerobase.zerolms.member.controller;
 
-import com.zerobase.zerolms.member.entity.Member;
+import com.zerobase.zerolms.admin.dto.MemberDto;
 import com.zerobase.zerolms.member.model.MemberInput;
 import com.zerobase.zerolms.member.model.ResetPasswordInput;
 import com.zerobase.zerolms.member.service.MemberService;
+import com.zerobase.zerolms.product.model.ServiceResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -79,37 +81,67 @@ public class MemberController {
     @GetMapping("/member/info")
     public String memberInfo(Model model, Principal principal) {
 
-//        String userId = principal.getName();
-//        MemberDto detail = memberService.detail(userId);
-//        model.addAttribute("detail", detail);
+        String userId = principal.getName();
+        MemberDto detail = memberService.detail(userId);
+
+        model.addAttribute("detail", detail);
 
         return "member/info";
     }
 
-    @GetMapping("/member/reset/password")
-    public String resetPassword(Model model, HttpServletRequest request) {
+    @PostMapping("/member/info")
+    public String memberInfoSubmit(Model model
+            , MemberInput parameter
+            , Principal principal) {
 
-        String uuid = request.getParameter("id"); // 인증아이디값 가져오기
+        String userId = principal.getName();
+        parameter.setEmail(userId);
 
-        boolean result = memberService.checkResetPassword(uuid);
-
-        model.addAttribute("result", result);
-
-        return "member/reset_password";
-    }
-
-    @PostMapping("/member/reset/password")
-    public String resetPasswordSubmit(Model model, ResetPasswordInput parameter) {
-
-        boolean result = false;
-        try {
-            result = memberService.resetPassword(parameter.getId(), parameter.getPassword());
-        } catch (Exception e) {
-
+        ServiceResult result = memberService.updateMember(parameter);
+        if (!result.isResult()) {
+            model.addAttribute("message", result.getMessage());
+            return "/common/error";
         }
 
-        model.addAttribute("result", result);
-
-        return "member/reset_password_result";
+        return "redirect:/member/info";
     }
+
+    @GetMapping("/member/password")
+    public String memberPassword(Model model, Principal principal) {
+
+        String userId = principal.getName();
+        MemberDto detail = memberService.detail(userId);
+        model.addAttribute("detail", detail);
+
+        return "member/password";
+    }
+
+    @PostMapping("/member/password")
+    public String memberPasswordSubmit(Model model
+            , MemberInput parameter
+            , Principal principal) {
+
+        String userId = principal.getName();
+        parameter.setEmail(userId);
+
+        ServiceResult result = memberService.updateMemberPassword(parameter);
+        if (!result.isResult()) {
+            model.addAttribute("message", result.getMessage());
+            return "common/error";
+        }
+
+        return "redirect:/member/info";
+    }
+
+//    @GetMapping("/member/takepurchase")
+//    public String memberTakePurchase(Model model, Principal principal) {
+//
+//        String userId = principal.getName();
+//        List<TakeCourseDto> list = takeCourseService.myCourse(userId);
+//
+//        model.addAttribute("list", list);
+//
+//        return "takepurchase";
+//    }
+
 }
