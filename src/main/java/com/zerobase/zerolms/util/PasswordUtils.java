@@ -6,6 +6,7 @@ public class PasswordUtils {
 
     public static boolean equals(String plaintext, String hashed) {
 
+        // 탈퇴 비밀번호 입력 확인 비교
         if (plaintext == null || plaintext.length() < 1) {
             return false;
         }
@@ -21,5 +22,4 @@ public class PasswordUtils {
         }
         return BCrypt.hashpw(plaintext,BCrypt.gensalt());
     }
-
 }

@@ -5,6 +5,7 @@ import com.zerobase.zerolms.admin.mapper.MemberMapper;
 import com.zerobase.zerolms.admin.model.MemberParam;
 import com.zerobase.zerolms.components.MailComponents;
 import com.zerobase.zerolms.member.entity.Member;
+import com.zerobase.zerolms.member.entity.MemberCode;
 import com.zerobase.zerolms.member.exception.MemberNotEmailAuthException;
 import com.zerobase.zerolms.member.exception.MemberStopUserException;
 import com.zerobase.zerolms.member.model.MemberInput;
@@ -265,15 +266,56 @@ public class MemberServiceImpl implements MemberService {
         }
         Member member = optionalMember.get();
 
-        if (!BCrypt.checkpw(parameter.getPassword(), member.getPassword())) {
+        if (!PasswordUtils.equals(parameter.getPassword(), member.getPassword())) {
             return new ServiceResult(false,"비밀번호가 일치하지 않습니다.");
         }
 
-        String encPassword = BCrypt.hashpw(parameter.getNewPassword(), BCrypt.gensalt());
+        String encPassword = PasswordUtils.encPassword(parameter.getNewPassword());
         member.setPassword(encPassword);
         memberRepository.save(member);
 
+
+//       if (!BCrypt.checkpw(parameter.getPassword(), member.getPassword())) {
+//           return new ServiceResult(false, "비밀번호가 일치하지 않습니다.");
+//       }
+//
+//       String encPassword = BCrypt.hashpw(parameter.getNewPassword(), BCrypt.gensalt());
+//       member.setPassword(encPassword);
+//       memberRepository.save(member);
+
         return new ServiceResult(true);
+    }
+
+    @Override
+    public ServiceResult withdraw(String email, String password) {
+
+        Optional<Member> optionalMember = memberRepository.findById(email);
+        if (!optionalMember.isPresent()) {
+            return  new ServiceResult(false,"회원 정보가 존재하지 않습니다.");
+        }
+        Member member = optionalMember.get();
+
+        if (!PasswordUtils.equals(password, member.getPassword())) {
+            return new ServiceResult(false,"비밀번호가 일치하지 않습니다.");
+        }
+
+        member.setUserName("삭제회원");
+        member.setPhone("");
+        member.setPassword("");
+        member.setRegDt(null);
+        member.setUdtDt(null);
+        member.setEmailAuthYn(false);
+        member.setEmailAuthDt(null);
+        member.setEmailAuthKey("");
+        member.setResetPasswordKey("");
+        member.setResetPasswordLimitDt(null);
+        member.setUserStatus(MemberCode.MEMBER_STATUS_WITHDRAW);
+        member.setZipcode("");
+        member.setAddr("");
+        member.setAddrDetail("");
+        memberRepository.save(member);
+
+        return new ServiceResult();
     }
 
     @Override

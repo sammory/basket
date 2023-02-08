@@ -63,5 +63,8 @@ public interface MemberService extends UserDetailsService {
      */
     ServiceResult updateMemberPassword(MemberInput parameter);
 
-
+    /**
+     * 회원정을 탈퇴시켜주는 로직
+     */
+    ServiceResult withdraw(String email, String password);
 }
