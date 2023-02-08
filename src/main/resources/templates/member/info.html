@@ -26,15 +26,7 @@
 
     <h1> 회원 정보 </h1>
 
-    <div>
-        <hr/>
-        <a href="/member/info">회원 정보 수정</a>
-        |
-        <a href="/member/password">비밀번호 변경</a>
-        |
-        <a href="/member/takepurchase">구매내역</a>
-        <hr/>
-    </div>
+    <div th:replace="/fragments/layout.html :: fragment-my-body-menu" ></div>
 
     <div>
         <form id="updateForm" method="post">

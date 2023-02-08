@@ -9,4 +9,6 @@ public class TakeProductInput {
     long productId;
     String email;
 
+    long takeProductId;
+
 }

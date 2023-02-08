@@ -29,4 +29,15 @@
         order by  reg_dt desc
         limit #{pageStart}, #{pageEnd}
     </select>
+
+    <!--userId 에 해당하는 구매요청 정보-->
+    <select id="selectListMyProduct" resultType="com.zerobase.zerolms.product.dto.TakeProductDto">
+        select tc.*
+            , c.subject
+        from take_product tc
+            join product c on tc.product_id = c.id
+        where tc.email = #{email}
+        order by  reg_dt desc
+    </select>
+
 </mapper>

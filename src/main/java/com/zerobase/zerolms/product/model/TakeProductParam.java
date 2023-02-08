@@ -8,6 +8,7 @@ public class TakeProductParam extends CommonParam {
 
     long id;
     String status;
-//    long categoryId;
+
+    String email;
 
 }

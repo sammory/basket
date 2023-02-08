@@ -4,7 +4,9 @@ import com.zerobase.zerolms.admin.dto.MemberDto;
 import com.zerobase.zerolms.member.model.MemberInput;
 import com.zerobase.zerolms.member.model.ResetPasswordInput;
 import com.zerobase.zerolms.member.service.MemberService;
+import com.zerobase.zerolms.product.dto.TakeProductDto;
 import com.zerobase.zerolms.product.model.ServiceResult;
+import com.zerobase.zerolms.product.service.TakeProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,7 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
+    private final TakeProductService takeProductService;
 
     @RequestMapping("/member/login")
     public String login() {
@@ -81,8 +84,8 @@ public class MemberController {
     @GetMapping("/member/info")
     public String memberInfo(Model model, Principal principal) {
 
-        String userId = principal.getName();
-        MemberDto detail = memberService.detail(userId);
+        String email = principal.getName();
+        MemberDto detail = memberService.detail(email);
 
         model.addAttribute("detail", detail);
 
@@ -94,8 +97,8 @@ public class MemberController {
             , MemberInput parameter
             , Principal principal) {
 
-        String userId = principal.getName();
-        parameter.setEmail(userId);
+        String email = principal.getName();
+        parameter.setEmail(email);
 
         ServiceResult result = memberService.updateMember(parameter);
         if (!result.isResult()) {
@@ -109,8 +112,8 @@ public class MemberController {
     @GetMapping("/member/password")
     public String memberPassword(Model model, Principal principal) {
 
-        String userId = principal.getName();
-        MemberDto detail = memberService.detail(userId);
+        String email = principal.getName();
+        MemberDto detail = memberService.detail(email);
         model.addAttribute("detail", detail);
 
         return "member/password";
@@ -121,8 +124,8 @@ public class MemberController {
             , MemberInput parameter
             , Principal principal) {
 
-        String userId = principal.getName();
-        parameter.setEmail(userId);
+        String email = principal.getName();
+        parameter.setEmail(email);
 
         ServiceResult result = memberService.updateMemberPassword(parameter);
         if (!result.isResult()) {
@@ -133,15 +136,15 @@ public class MemberController {
         return "redirect:/member/info";
     }
 
-//    @GetMapping("/member/takepurchase")
-//    public String memberTakePurchase(Model model, Principal principal) {
-//
-//        String userId = principal.getName();
-//        List<TakeCourseDto> list = takeCourseService.myCourse(userId);
-//
-//        model.addAttribute("list", list);
-//
-//        return "takepurchase";
-//    }
+    @GetMapping("/member/takeproduct")
+    public String memberTakePurchase(Model model, Principal principal) {
+
+        String email = principal.getName();
+        List<TakeProductDto> list = takeProductService.myProduct(email);
+
+        model.addAttribute("list", list);
+
+        return "member/takeproduct";
+    }
 
 }

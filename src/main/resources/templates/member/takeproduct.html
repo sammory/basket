@@ -21,6 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
     <script>
+
         $(document).ready(function () {
 
             $('.row-buttons button').on('click', function () {
@@ -32,9 +33,9 @@
                     return false;
                 }
 
-                var url = '/api/member/course/cancel.api';
+                var url = '/api/member/product/cancel.api';
                 var parameter = {
-                    takeCourseId: id
+                    takeProductId: id
                 };
                 axios.post(url, parameter).then(function (response) {
                     console.log(response);
@@ -60,22 +61,17 @@
             });
 
         });
+
     </script>
 
 </head>
 <body>
-    <h1>회원 정보</h1>
     <div th:replace="/fragments/layout.html :: fragment-body-menu" ></div>
 
-    <div>
-        <hr/>
-        <a href="/member/info">회원 정보 수정</a>
-        |
-        <a href="/member/password">비밀번호 변경</a>
-        |
-        <a href="/member/takepurchase">구매내역</a>
-        <hr/>
-    </div>
+    <h1>회원 정보</h1>
+
+    <div th:replace="/fragments/layout.html :: fragment-my-body-menu" ></div>
+
 
     <div class="list">
 
@@ -87,7 +83,7 @@
                     등록일
                 </th>
                 <th>
-                    강좌명
+                    상품명
                 </th>
                 <th>
                     상태
@@ -109,13 +105,13 @@
                 </td>
 
                 <td>
-                    <P th:if="${x.status eq 'REQ'}">수강신청</P>
+                    <P th:if="${x.status eq 'REQ'}">구매신청</P>
                     <P th:if="${x.status eq 'COMPLETE'}">결재완료</P>
-                    <P th:if="${x.status eq 'CANCEL'}">수강취소</P>
+                    <P th:if="${x.status eq 'CANCEL'}">구매취소</P>
                 </td>
                 <td>
                     <div class="row-buttons" th:if="${x.status eq 'REQ'}">
-                        <button type="button" th:value="${x.id}">수강취소 처리</button>
+                        <button type="button" th:value="${x.id}">구매취소 처리</button>
                     </div>
                 </td>
 

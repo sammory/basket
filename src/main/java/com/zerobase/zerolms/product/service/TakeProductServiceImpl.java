@@ -1,13 +1,11 @@
 package com.zerobase.zerolms.product.service;
 
-import com.zerobase.zerolms.product.dto.ProductDto;
 import com.zerobase.zerolms.product.dto.TakeProductDto;
 import com.zerobase.zerolms.product.entity.TakeProduct;
-import com.zerobase.zerolms.product.mapper.ProductMapper;
+import com.zerobase.zerolms.product.entity.TakeProductCode;
 import com.zerobase.zerolms.product.mapper.TakeProductMapper;
 import com.zerobase.zerolms.product.model.ServiceResult;
 import com.zerobase.zerolms.product.model.TakeProductParam;
-import com.zerobase.zerolms.product.repository.ProductRepository;
 import com.zerobase.zerolms.product.repository.TakeProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,6 +40,17 @@ public class TakeProductServiceImpl implements TakeProductService {
     }
 
     @Override
+    public TakeProductDto detail(long id) {
+
+        Optional<TakeProduct> optionalTakeProduct = takeProductRepository.findById(id);
+        if (optionalTakeProduct.isPresent()) {
+            return TakeProductDto.of(optionalTakeProduct.get());
+        }
+
+        return null;
+    }
+
+    @Override
     public ServiceResult updateStatus(long id, String status) {
 
         Optional<TakeProduct> optionalTakeProduct = takeProductRepository.findById(id);
@@ -55,5 +64,30 @@ public class TakeProductServiceImpl implements TakeProductService {
         takeProductRepository.save(takeProduct);
 
         return new ServiceResult(true);
+    }
+
+    @Override
+    public List<TakeProductDto> myProduct(String email) {
+
+        TakeProductParam parameter = new TakeProductParam();
+        parameter.setEmail(email);
+        List<TakeProductDto> list = takeProductMapper.selectListMyProduct(parameter);
+
+        return list;
+    }
+
+    @Override
+    public ServiceResult cancel(long id) {
+
+        Optional<TakeProduct> optionalTakeProduct = takeProductRepository.findById(id);
+        if (!optionalTakeProduct.isPresent()) {
+            return new ServiceResult(false,"상품 정보가 존재하지 않습니다.");
+        }
+        TakeProduct takeProduct = optionalTakeProduct.get();
+
+        takeProduct.setStatus(TakeProductCode.STATUS_CANCEL);
+        takeProductRepository.save(takeProduct);
+
+        return new ServiceResult();
     }
 }

@@ -15,8 +15,22 @@ public interface TakeProductService {
     List<TakeProductDto> list(TakeProductParam parameter);
 
     /**
+     * 구매 상세 정보
+     */
+    TakeProductDto detail(long id);
+
+    /**
      * 구매요청 상태변경
      */
     ServiceResult updateStatus(long id, String status);
 
+    /**
+     * 내 구매요청 목록
+     */
+    List<TakeProductDto> myProduct(String email);
+
+    /**
+     * 내 구매요청 취소처리
+     */
+    ServiceResult cancel(long Id);
 }

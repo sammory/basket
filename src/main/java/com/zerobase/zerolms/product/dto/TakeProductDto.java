@@ -1,5 +1,6 @@
 package com.zerobase.zerolms.product.dto;
 
+import com.zerobase.zerolms.product.entity.TakeProduct;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,19 @@ public class TakeProductDto {
     // 추가컬럼
     long totalCount;
     long seq;
+
+    public static TakeProductDto of(TakeProduct takeProduct) {
+
+            return TakeProductDto.builder()
+                    .id(takeProduct.getId())
+                    .productId(takeProduct.getProductId())
+                    .email(takeProduct.getEmail())
+                    .payPrice(takeProduct.getPayPrice())
+                    .status(takeProduct.getStatus())
+                    .regDt(takeProduct.getRegDt())
+                    .build();
+
+    }
 
     // 구매요청 등록일 Format 처리
     public String getRegDtText() {

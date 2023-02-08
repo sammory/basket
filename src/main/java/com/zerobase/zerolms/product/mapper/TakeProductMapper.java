@@ -13,4 +13,5 @@ public interface TakeProductMapper {
     long selectListCount(TakeProductParam parameter);
     // 리스트형태로 리턴
     List<TakeProductDto> selectList(TakeProductParam parameter);
+    List<TakeProductDto> selectListMyProduct(TakeProductParam parameter);
 }
