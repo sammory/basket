@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -23,27 +24,31 @@ import java.util.List;
 @Controller
 public class AdminTakeProductController extends BaseController {
 
+    private final ProductService productService;
     private final TakeProductService takeProductService;
-    private final CategoryService categoryService;
 
 
     @GetMapping("/admin/takeproduct/list.do")
-    public String list(Model model, TakeProductParam parameter) {
+    public String list(Model model, TakeProductParam parameter
+            , BindingResult bindingResult) {
 
         parameter.init();
-        List<TakeProductDto> productList = takeProductService.list(parameter);
+        List<TakeProductDto> list = takeProductService.list(parameter);
 
         // 페이징
         long totalCount = 0;
-        if (!CollectionUtils.isEmpty(productList)) {
-            totalCount = productList.get(0).getTotalCount();
+        if (!CollectionUtils.isEmpty(list)) {
+            totalCount = list.get(0).getTotalCount();
         }
         String queryString = parameter.getQueryString();
         String pagerHtml = getPaperHtml(totalCount, parameter.getPageSize(), parameter.getPageIndex(), queryString);
 
-        model.addAttribute("list", productList);
+        model.addAttribute("list", list);
         model.addAttribute("totalCount", totalCount);
         model.addAttribute("pager", pagerHtml);
+
+        List<ProductDto> productList = productService.listAll();
+        model.addAttribute("productList", productList);
 
         return "/admin/takeproduct/list";
     }

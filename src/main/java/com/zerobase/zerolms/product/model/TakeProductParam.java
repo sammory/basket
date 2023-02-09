@@ -11,4 +11,6 @@ public class TakeProductParam extends CommonParam {
 
     String email;
 
+    long searchProductId;
+
 }

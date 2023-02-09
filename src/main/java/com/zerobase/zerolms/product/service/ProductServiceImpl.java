@@ -194,4 +194,12 @@ public class ProductServiceImpl implements ProductService {
         return result;
     }
 
+    @Override
+    public List<ProductDto> listAll() {
+
+        List<Product> productList = productRepository.findAll();
+
+        return ProductDto.of(productList);
+    }
+
 }

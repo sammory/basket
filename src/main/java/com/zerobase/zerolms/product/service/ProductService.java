@@ -49,4 +49,9 @@ public interface ProductService {
      * 장바구니 담기
      */
     ServiceResult req(TakeProductInput parameter);
+
+    /**
+     * 전체 상품 목록
+     */
+    List<ProductDto> listAll();
 }

@@ -7,13 +7,18 @@
 <!--    selectListWhere 로 동일한 코드-->
     <sql id="selectListWhere">
 
+        <if test="searchProductId > 0">
+            and c.id = #{searchProductId}
+        </if>
+
     </sql>
 
     <select id="selectListCount" resultType="long">
         select count(*)
-        from take_product
+        from take_product tc
+            join product c on tc.product_id = c.id
+            join member m on tc.email = m.email
         where 1 = 1
-        <include refid="selectListWhere"/>
     </select>
 
     <select id="selectList" resultType="com.zerobase.zerolms.product.dto.TakeProductDto">
@@ -22,8 +27,8 @@
         , m.user_name
         , m.phone
         from take_product tc
-        join product c on tc.product_id = c.id
-        join member m on tc.email = m.email
+            join product c on tc.product_id = c.id
+            join member m on tc.email = m.email
         where 1 = 1
         <include refid="selectListWhere"/>
         order by  reg_dt desc
