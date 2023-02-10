@@ -55,6 +55,8 @@ public class ProductServiceImpl implements ProductService {
                 .salePrice(parameter.getSalePrice())
                 .saleEndDt(saleEnDt)
                 .regDt(LocalDateTime.now())
+                .filename(parameter.getFilename())
+                .urlFilename(parameter.getUrlFilename())
                 .build();
         productRepository.save(product);
 
@@ -81,6 +83,8 @@ public class ProductServiceImpl implements ProductService {
         product.setSalePrice(parameter.getSalePrice());
         product.setSaleEndDt(saleEnDt);
         product.setUdtDt(LocalDateTime.now());
+        product.setFilename(parameter.getFilename());
+        product.setUrlFilename(parameter.getUrlFilename());
 
         productRepository.save(product);
 

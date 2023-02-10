@@ -7,6 +7,7 @@ import com.zerobase.zerolms.product.model.ProductParam;
 import com.zerobase.zerolms.product.service.ProductService;
 import com.zerobase.zerolms.util.PageUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
@@ -22,7 +23,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
+@Slf4j
 @RequiredArgsConstructor // final 생성자 생성하기 위해
 @Controller
 public class AdminProductController extends BaseController {
@@ -79,9 +82,75 @@ public class AdminProductController extends BaseController {
         return "/admin/product/add";
     }
 
+    private String[] getNewSavaFile(String baseLocalPath, String baseUrlPath, String originalFilename) {
+
+        LocalDate now = LocalDate.now();
+
+        String[] dirs = {
+                String.format("%s/%d/", baseLocalPath, now.getYear()),
+                String.format("%s/%d/%02d/", baseLocalPath, now.getYear(), now.getMonthValue()),
+                String.format("%s/%d/%02d/%02d/", baseLocalPath, now.getYear(), now.getMonthValue(), now.getDayOfMonth())};
+
+        String urlDir = String.format("%s/%d/%02d/%02d/", baseUrlPath, now.getYear(), now.getMonthValue(), now.getDayOfMonth());
+
+
+        for (String dir : dirs) {
+            File file = new File(dir);
+            if (!file.isDirectory()) {
+                file.mkdir();
+            }
+        }
+
+        String fileExtension = "";
+        if (originalFilename != null) {
+            int dotPos = originalFilename.lastIndexOf(".");
+            if (dotPos > -1) {
+                fileExtension = originalFilename.substring(dotPos + 1);
+            }
+        }
+
+        String uuid = UUID.randomUUID().toString().replaceAll("-","");
+        String newFilename = String.format("%s%s", dirs[2], uuid);
+        String newUrlFilename = String.format("%s%s", urlDir, uuid);
+        if (fileExtension.length() > 0) {
+            newFilename += "." + fileExtension;
+            newUrlFilename += "." + fileExtension;
+        }
+
+        return new String[]{newFilename, newUrlFilename};
+    }
+
     @PostMapping(value = {"/admin/product/add.do", "/admin/product/edit.do"})
     public String addSubmit(Model model, HttpServletRequest request
+            , MultipartFile file
             , ProductInput parameter) {
+
+
+        String savaFilename = "";
+        String urlFilename = "";
+
+        if (file != null) {
+            String originalFilename = file.getOriginalFilename();
+
+            String baseLocalPath = "C:/dev/zerobaseEx/basket/files";
+            String baseUrlPath = "/files";
+            String[] arrFilename = getNewSavaFile(baseLocalPath, baseUrlPath, originalFilename);
+
+            savaFilename = arrFilename[0];
+            urlFilename = arrFilename[1];
+
+            try {
+                File newFile = new File(savaFilename);
+                FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(newFile));
+            } catch (IOException e) {
+                log.info("########################## - 1");
+                log.info(e.getMessage());
+            }
+        }
+
+        parameter.setFilename(savaFilename);
+        parameter.setUrlFilename(urlFilename);
+
 
         boolean editMode = request.getRequestURI().contains("/edit.do");
 
@@ -103,7 +172,7 @@ public class AdminProductController extends BaseController {
     }
 
     @PostMapping("/admin/product/delete.do")
-    public String del(Model model,HttpServletRequest request
+    public String del(Model model, HttpServletRequest request
             , ProductInput parameter) {
 
         boolean result = productService.del(parameter.getIdList());

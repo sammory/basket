@@ -29,9 +29,13 @@ public class ProductDto {
     LocalDateTime regDt;  // 등록일
     LocalDateTime udtDt;  // 수정일
 
+    String filename;
+    String urlFilename;
+
     // 추가컬럼
     long totalCount;
     long seq;
+
 
     public static ProductDto of(Product product) {
         return ProductDto.builder()
@@ -46,6 +50,8 @@ public class ProductDto {
                 .saleEndDt(product.getSaleEndDt())
                 .regDt(product.getRegDt())
                 .udtDt(product.getUdtDt())
+                .filename(product.getFilename())
+                .urlFilename(product.getUrlFilename())
                 .build();
     }
     public static List<ProductDto> of(List<Product> product) {
