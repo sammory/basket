@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerobase.zerolms.basket.mapper.BasketMapper">
+
+<!--    selectListWhere 로 동일한 코드-->
+    <sql id="selectListWhere">
+
+        <if test="searchProductId > 0">
+            and c.id = #{searchProductId}
+        </if>
+
+    </sql>
+
+    <select id="selectListCount" resultType="long">
+        select count(*)
+        from basket bk
+            join product c on bk.product_id = c.id
+            join member m on tc.email = m.email
+        where 1 = 1
+    </select>
+
+    <select id="selectList" resultType="com.zerobase.zerolms.basket.dto.BasketDto">
+        select bk.*
+        , c.subject
+        , m.user_name
+        , m.phone
+        from basket bk
+            join product c on bk.product_id = c.id
+            join member m on tc.email = m.email
+        where 1 = 1
+        <include refid="selectListWhere"/>
+        order by  reg_dt desc
+        limit #{pageStart}, #{pageEnd}
+    </select>
+
+    <!--userId 에 해당하는 구매요청 정보-->
+    <select id="selectListMyBasket" resultType="com.zerobase.zerolms.basket.dto.BasketDto">
+        select bk.*
+            , c.subject
+        from basket bk
+            join product c on bk.product_id = c.id
+        where bk.email = #{email}
+        order by  reg_dt desc
+    </select>
+
+</mapper>

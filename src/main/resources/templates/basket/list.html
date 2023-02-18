@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>장바구니 페이지</title>
+    <style>
+        .list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .list table th, .list table td {
+            border: solid 1px #000;
+        }
+        p.nothing {
+            text-align: center;
+            padding: 100px;
+        }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $('form[name=deleteForm]').on('submit', function () {
+
+                if (!confirm(' 상품을 삭제하시겠습니까?' )) {
+                    return false;
+                }
+            });
+
+        });
+    </script>
+
+</head>
+<body>
+    <div th:replace="/fragments/layout.html :: fragment-body-menu" ></div>
+
+    <h1>장바구니 상세</h1>
+
+<!--    <div th:replace="/fragments/layout.html :: fragment-my-body-menu" ></div>-->
+
+
+    <div class="list">
+
+        <table>
+            <thead>
+            <tr>
+                <th> NO </th>
+                <th>
+                    등록일
+                </th>
+                <th>
+                    상품명
+                </th>
+                <th>
+                    수량
+                </th>
+                <th>
+                    비고
+                </th>
+
+            </tr>
+            </thead>
+            <tbody id="dateList">
+            <tr th:each="x, i: ${list}">
+                <td th:text="${i.index+1}">1</td>
+                <td>
+                    <p th:text="${x.regDtText}">2021.01.01</p>
+                </td>
+                <td>
+                    <p th:text="${x.subject}">상품명 </p>
+                </td>
+                <td>
+                    <p th:text="${x.totalCount}">수량 </p>
+                </td>
+
+                <td>
+                    <div>
+                        <form name="deleteForm" method="post" action="/basket/delete">
+                            <input type="hidden" name="id" th:value="${x.id}"/>
+                         <button type="submit" >삭제</button>
+                        </form>
+                    </div>
+                </td>
+
+            </tr>
+            <tr th:if="${#lists.size(list) < 1}">
+                <td colspan="8">
+                    <p class="nothing">내용이 없습니다.</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>

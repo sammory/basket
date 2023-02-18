@@ -1,7 +1,10 @@
-package com.zerobase.zerolms.product.controller;
+package com.zerobase.zerolms.basket.controller;
 
 import com.zerobase.zerolms.admin.repository.CategoryService;
+import com.zerobase.zerolms.basket.model.BasketInput;
+import com.zerobase.zerolms.basket.service.BasketService;
 import com.zerobase.zerolms.common.model.ResponseResult;
+import com.zerobase.zerolms.product.controller.BaseController;
 import com.zerobase.zerolms.product.model.ServiceResult;
 import com.zerobase.zerolms.product.model.TakeProductInput;
 import com.zerobase.zerolms.product.service.ProductService;
@@ -18,17 +21,16 @@ import java.security.Principal;
 @RestController // json 형태로 리턴
 public class ApiProductController extends BaseController {
 
-    private final ProductService productService;
-    private final CategoryService categoryService;
+    private final BasketService basketService;
 
-    @PostMapping("/api/product/req.api")
-    public ResponseEntity<?> productRep(Model model
-            , @RequestBody TakeProductInput parameter
+    @PostMapping("/api/basket/add.api")
+    public ResponseEntity<?> productAdd(Model model
+            , @RequestBody BasketInput parameter
             , Principal principal) {
 
         parameter.setEmail(principal.getName());
 
-        ServiceResult result = productService.req(parameter);
+        ServiceResult result = basketService.add(parameter);
         if (!result.isResult()) {
             ResponseResult responseResult = new ResponseResult(false, result.getMessage());
             return ResponseEntity.ok().body(responseResult);
@@ -36,6 +38,5 @@ public class ApiProductController extends BaseController {
         ResponseResult responseResult = new ResponseResult(true);
         return ResponseEntity.ok().body(responseResult);
     }
-
 }
 

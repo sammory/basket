@@ -1,10 +1,7 @@
 package com.zerobase.zerolms.product.controller;
 
-import com.zerobase.zerolms.admin.repository.CategoryService;
 import com.zerobase.zerolms.product.dto.ProductDto;
 import com.zerobase.zerolms.product.dto.TakeProductDto;
-import com.zerobase.zerolms.product.model.ProductInput;
-import com.zerobase.zerolms.product.model.ProductParam;
 import com.zerobase.zerolms.product.model.ServiceResult;
 import com.zerobase.zerolms.product.model.TakeProductParam;
 import com.zerobase.zerolms.product.service.ProductService;
@@ -17,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RequiredArgsConstructor // final 생성자 생성하기 위해
