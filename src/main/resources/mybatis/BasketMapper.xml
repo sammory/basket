@@ -45,4 +45,12 @@
         order by  reg_dt desc
     </select>
 
+<!--    basket id값 추출-->
+    <select id="selectListMyBasketId" resultType="com.zerobase.zerolms.basket.dto.BasketDto">
+        select bk.*
+        , c.subject
+        from basket bk
+        where bk.email = #{email}
+    </select>
+
 </mapper>

@@ -36,5 +36,6 @@ public interface BasketService {
      */
     boolean update(Long id, long quantity);
 
+    long totalPay(List<BasketDto> list);
 
 }

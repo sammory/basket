@@ -108,5 +108,18 @@ public class BasketServiceImpl implements BasketService {
         return true;
     }
 
+    @Override
+    public long totalPay(List<BasketDto> list) {
+
+
+
+        long totalPay = 0;
+        for (BasketDto x : list) {
+            totalPay += x.getPayPrice() * x.getQuantity();
+        }
+
+        return totalPay;
+    }
+
 
 }

@@ -18,7 +18,6 @@ public class BasketDto {
     long productId;
     long quantity;
     long payPrice; // 결재금액
-    long totalPay; // 장바구니 전체 결제금액
 
 
     LocalDateTime regDt; // 장바구니 담은 날짜

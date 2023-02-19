@@ -32,7 +32,10 @@ public class BasketController extends BaseController {
         String email = principal.getName();
         List<BasketDto> list = basketService.myBasket(email);
 
+        long total = basketService.totalPay(list);
+
         model.addAttribute("list", list);
+        model.addAttribute("total", total);
 
         return "/basket/list";
     }
