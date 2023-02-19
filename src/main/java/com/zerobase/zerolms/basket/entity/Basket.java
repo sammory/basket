@@ -26,7 +26,7 @@ public class Basket implements BasketProductCode{
     long payPrice; // 결재금액
     String status; // 상태
 
-    long cnt;
+    long quantity;
     LocalDateTime regDt; // 신청일
 
 }

@@ -11,6 +11,7 @@ import com.zerobase.zerolms.product.model.ServiceResult;
 import com.zerobase.zerolms.product.repository.BasketRepository;
 import com.zerobase.zerolms.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -56,6 +57,7 @@ public class BasketServiceImpl implements BasketService {
                 .productId(product.getId())
                 .email(parameter.getEmail())
                 .payPrice(product.getSalePrice())
+                .quantity(parameter.getQuantity())
                 .regDt(LocalDateTime.now())
                 .status(Basket.STATUS_REQ)
                 .build();
@@ -68,9 +70,9 @@ public class BasketServiceImpl implements BasketService {
 
     // 장바구니 상품삭제 구현
     @Override
-    public boolean del(long id) {
+    public boolean del(long productId) {
 
-        basketRepository.deleteById(id);
+        basketRepository.deleteByProductId(productId);
 
         return true;
     }
@@ -91,6 +93,20 @@ public class BasketServiceImpl implements BasketService {
         return list;
     }
 
+    @Override
+    public boolean update(Long id, long quantity) {
+
+        Optional<Basket> optionalBasket = basketRepository.findById(id);
+        if (!optionalBasket.isPresent()) {
+            throw new UsernameNotFoundException("장바구니 정보가 존재하지 않습니다.");
+        }
+        Basket basket = optionalBasket.get();
+
+        basket.setQuantity(quantity);
+        basketRepository.save(basket);
+
+        return true;
+    }
 
 
 }

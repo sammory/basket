@@ -1,6 +1,7 @@
 package com.zerobase.zerolms.basket.service;
 
 import com.zerobase.zerolms.basket.dto.BasketDto;
+import com.zerobase.zerolms.basket.entity.Basket;
 import com.zerobase.zerolms.basket.model.BasketInput;
 import com.zerobase.zerolms.basket.model.BasketParam;
 import com.zerobase.zerolms.product.dto.ProductDto;
@@ -18,7 +19,7 @@ public interface BasketService {
     /**
      * 내 장바구니 상품 삭제
      */
-    boolean del(long id);
+    boolean del(long productId);
 
     /**
      * 전체 상품 목록
@@ -29,6 +30,11 @@ public interface BasketService {
      * 내 장바구니 목록
      */
     List<BasketDto> myBasket(String email);
+
+    /**
+     * 장바구니 상품 수량변경
+     */
+    boolean update(Long id, long quantity);
 
 
 }

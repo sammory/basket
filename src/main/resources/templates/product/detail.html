@@ -22,9 +22,15 @@
 
                 var $thisForm = $(this);
                 var url = '/api/basket/add.api';
+                debugger;
                 var parameter = {
-                    productId: $thisForm.find('input[name=id]').val()
+
+                    productId: $thisForm.find('input[name=id]').val(),
+                    quantity: $thisForm.find('input[name=quantity]').val()
                 };
+                console.log("tsest",parameter);
+                debugger;
+
                 axios.post(url, parameter).then(function (response) {
                     console.log(response);
                     console.log(response.data);
@@ -39,7 +45,7 @@
 
                     //정상적일때
                     alert(' 장바구니 담기 완료되었습니다.');
-                    location.href = "/";
+                    location.href = "/product";
 
 
                 }).catch(function (err) {
@@ -77,15 +83,13 @@
                 <form id="submitForm" method="post">
                     <button type="button" onclick="location.href='/basket/purchase';">구매</button>
                     <input type="hidden" name="id" th:value="${detail.id}"/>
+                    <input type="hidden" name="quantity" th:value="1"/>
                     <button type="submit">장바구니</button>
                     <a href="/product">상품목록</a>
                 </form>
             </div>
         </h2>
-
     </div>
-
-
 
 
 </body>

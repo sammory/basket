@@ -47,9 +47,18 @@ public class BasketController extends BaseController {
 
 //   장바구니 품목 삭제
     @PostMapping("/basket/delete")
-    public String del(Model model, Basket parameter) {
+    public String del(Model model, BasketInput parameter) {
 
-        boolean result = basketService.del(parameter.getId());
+        boolean result = basketService.del(parameter.getProductId());
+
+        return "redirect:/basket/list";
+    }
+
+    //   장바구니 상품 수량변경
+    @PostMapping("/basket/update")
+    public String update(Model model, BasketInput parameter) {
+
+        boolean result = basketService.update(parameter.getId(), parameter.getQuantity());
 
         return "redirect:/basket/list";
     }

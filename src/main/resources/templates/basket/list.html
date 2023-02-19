@@ -16,6 +16,9 @@
             text-align: center;
             padding: 100px;
         }
+        .inline-div {
+            display: inline-block;
+        }
 
     </style>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
@@ -29,6 +32,24 @@
                 if (!confirm(' 상품을 삭제하시겠습니까?' )) {
                     return false;
                 }
+            });
+
+            $('button.update-Button').on('click', function () {
+
+                if (!confirm(' 수량 변경하시겠습니까?' )) {
+                    return false;
+                }
+
+                var $this = $(this);
+                var $tr = $this.closest('tr');
+
+                var id = $tr.find('input[name=id]').val();
+                var quantity = $tr.find('input[name=quantity]').val();
+
+                $updateForm = $('form[name=updateForm]');
+                $updateForm.find('input[name=id]').val(id);
+                $updateForm.find('input[name=quantity]').val(quantity);
+                $updateForm.submit();
             });
 
         });
@@ -59,6 +80,9 @@
                     수량
                 </th>
                 <th>
+                    가격
+                </th>
+                <th>
                     비고
                 </th>
 
@@ -74,19 +98,33 @@
                     <p th:text="${x.subject}">상품명 </p>
                 </td>
                 <td>
-                    <p th:text="${x.totalCount}">수량 </p>
+                    <div class="inline-div">
+                        <input type="hidden" name="id" th:value="${x.id}"/>
+                        <input th:value="${x.quantity}" type="text" name="quantity"/>
+                        <button class="update-Button" type="button">수량변경</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="inline-div">
+                        <p th:text="${x.payPrice}">가격 </p>
+                    </div>
                 </td>
 
                 <td>
                     <div>
                         <form name="deleteForm" method="post" action="/basket/delete">
-                            <input type="hidden" name="id" th:value="${x.id}"/>
+                            <input type="hidden" name="productId" th:value="${x.productId}"/>
                          <button type="submit" >삭제</button>
                         </form>
                     </div>
                 </td>
-
             </tr>
+
+            <div>
+                <p class="total-pay">전체<span th:text="${totalPay}"></span>개</p>
+            </div>
+
+
             <tr th:if="${#lists.size(list) < 1}">
                 <td colspan="8">
                     <p class="nothing">내용이 없습니다.</p>
@@ -96,6 +134,11 @@
         </table>
 
     </div>
+
+    <form name="updateForm" method="post" action="/basket/update">
+        <input type="hidden" name="id"/>
+        <input type="hidden" name="quantity"/>
+    </form>
 
 </body>
 </html>
