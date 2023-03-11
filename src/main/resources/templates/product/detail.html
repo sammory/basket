@@ -12,7 +12,9 @@
     <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <script>
+
         $(function () {
+
 
             $('#submitForm').on('submit', function () {
 
@@ -22,14 +24,11 @@
 
                 var $thisForm = $(this);
                 var url = '/api/basket/add.api';
-                debugger;
                 var parameter = {
 
                     productId: $thisForm.find('input[name=id]').val(),
                     quantity: $thisForm.find('input[name=quantity]').val()
                 };
-                console.log("tsest",parameter);
-                debugger;
 
                 axios.post(url, parameter).then(function (response) {
                     console.log(response);
@@ -58,6 +57,13 @@
         });
 
     </script>
+    <script>
+        function directBuy() {
+            var productId = $("#submitForm input[name=id]").val();
+            var url = "/order/direct-buy?id=" + productId;
+            window.location.href = url;
+        }
+    </script>
 </head>
 <body>
     <div th:replace="/fragments/layout.html :: fragment-body-menu" ></div>
@@ -81,9 +87,10 @@
 
             <div>
                 <form id="submitForm" method="post">
-                    <button type="button" onclick="location.href='/basket/purchase';">구매</button>
                     <input type="hidden" name="id" th:value="${detail.id}"/>
                     <input type="hidden" name="quantity" th:value="1"/>
+<!--                    <button type="button" onclick="location.href='/order/direct-buy';">바로구매</button>-->
+                    <button type="button" onclick="directBuy()">바로구매</button>
                     <button type="submit">장바구니</button>
                     <a href="/product">상품목록</a>
                 </form>

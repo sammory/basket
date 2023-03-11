@@ -36,4 +36,5 @@ public class Product {
 
     String filename;
     String urlFilename;
+
 }

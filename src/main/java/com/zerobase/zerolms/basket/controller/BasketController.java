@@ -1,14 +1,10 @@
 package com.zerobase.zerolms.basket.controller;
 
-import com.zerobase.zerolms.admin.dto.MemberDto;
-import com.zerobase.zerolms.admin.model.MemberParam;
 import com.zerobase.zerolms.basket.dto.BasketDto;
-import com.zerobase.zerolms.basket.entity.Basket;
 import com.zerobase.zerolms.basket.model.BasketInput;
 import com.zerobase.zerolms.basket.service.BasketService;
 import com.zerobase.zerolms.member.service.MemberService;
 import com.zerobase.zerolms.product.controller.BaseController;
-import com.zerobase.zerolms.product.entity.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,13 +36,7 @@ public class BasketController extends BaseController {
         return "/basket/list";
     }
 
-    // 결제 페이지
-    @GetMapping("/basket/purchase")
-    public String purchase(Model model) {
 
-
-        return "/basket/purchase";
-    }
 
 //   장바구니 품목 삭제
     @PostMapping("/basket/delete")

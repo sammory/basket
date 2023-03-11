@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -107,6 +108,23 @@ public class MemberController {
         }
 
         return "redirect:/member/info";
+    }
+    @PostMapping("/order/direct-buy")
+    public String memberInfoSubmitAddress(Model model
+            , MemberInput parameter
+            , Principal principal
+            , @RequestParam ("id") Long productId) {
+
+        String email = principal.getName();
+        parameter.setEmail(email);
+
+        ServiceResult result = memberService.updateMember(parameter);
+        if (!result.isResult()) {
+            model.addAttribute("message", result.getMessage());
+            return "/common/error";
+        }
+
+        return "redirect:/order/direct-buy?id=" + productId;
     }
 
     @GetMapping("/member/password")

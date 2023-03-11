@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>회원 정보</title>
+    <title>바로구매 페이지</title>
+    <style>
+        span.price {
+            text-decoration: line-through;
+        }
+    </style>
     <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <script>
+
         $(function () {
 
             $('#updateForm').on('submit', function () {
@@ -18,16 +25,35 @@
 
         });
 
+        $(document).ready(function () {
+
+            $('.payment button').on('click', function () {
+                var url = '/order-complete';
+
+                axios.post(url).then(function (response) {
+                    console.log(response);
+                    console.log(response.data);
+
+                    // 서버에서 반환한 응답 처리
+                    // ...
+
+                }).catch(function (err) {
+                    console.log(err);
+                });
+            });
+
+        });
+
     </script>
 </head>
 <body>
-    <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+    <div th:replace="/fragments/layout.html :: fragment-body-menu" ></div>
+    <h1> 주문/결제 </h1>
 
-    <h1> 회원 정보 </h1>
-
-    <div th:replace="/fragments/layout.html :: fragment-my-body-menu" ></div>
+    <hr/>
 
     <div>
+        <h2>받는사람정보</h2>
         <form id="updateForm" method="post">
             <table>
                 <tbody>
@@ -64,28 +90,48 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <th>가입일</th>
-                    <td>
-                        <p th:text="${detail.regDtText}">가입일</p>
-                    </td>
-                </tr>
-                <tr>
-                    <th>회원정보 수정일</th>
-                    <td>
-                        <p th:text="${detail.udtDtText}">회원정보 수정일</p>
-                    </td>
-                </tr>
                 </tbody>
             </table>
 
             <div>
-                <button type="submit">수정</button>
-                <a href="/member/withdraw"> 회원 탈퇴 </a>
+                <button type="submit">배송지변경</button>
             </div>
+            <hr/>
         </form>
 
     </div>
+
+    <div>
+        <h2>결제정보</h2>
+            <table>
+                <tbody>
+                <tr>
+                    <th>상품명</th>
+                    <td>
+                        <p th:text="${productDetail.subject}">상품명</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>총상품가격</th>
+                    <td>
+                        <p th:text="${productDetail.salePrice}">가격</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>보유캐시</th>
+                    <td>
+                        <p th:text="${detail.cash}">보유캐시</p>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+            <div>
+                <button class="payment" type="button">결제하기</button>
+            </div>
+            <hr/>
+    </div>
+
 
     <!--다음 우편번호 API-->
 
@@ -152,6 +198,8 @@
             }).open();
         }
     </script>
+
+
 
 
 </body>

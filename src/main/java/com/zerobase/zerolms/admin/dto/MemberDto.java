@@ -20,6 +20,7 @@ public class MemberDto {
     String phone;
     String password;
     String address;
+    long cash;
     LocalDateTime regDt;
     LocalDateTime udtDt;
 
@@ -48,6 +49,7 @@ public class MemberDto {
                 .userName(member.getUserName())
                 .phone(member.getPhone())
                 //.password(member.getPassword())
+                .cash(member.getCash())
                 .regDt(member.getRegDt())
                 .udtDt(member.getUdtDt())
                 .emailAuthYn(member.isEmailAuthYn())
