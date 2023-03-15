@@ -109,23 +109,23 @@ public class MemberController {
 
         return "redirect:/member/info";
     }
-    @PostMapping("/order/direct-buy")
-    public String memberInfoSubmitAddress(Model model
-            , MemberInput parameter
-            , Principal principal
-            , @RequestParam ("id") Long productId) {
-
-        String email = principal.getName();
-        parameter.setEmail(email);
-
-        ServiceResult result = memberService.updateMember(parameter);
-        if (!result.isResult()) {
-            model.addAttribute("message", result.getMessage());
-            return "/common/error";
-        }
-
-        return "redirect:/order/direct-buy?id=" + productId;
-    }
+//    @PostMapping("/order/direct-buy2")
+//    public String memberOrderUpdate(Model model
+//            , MemberInput parameter
+//            , Principal principal
+//            , @RequestParam ("id") Long productId) {
+//
+//        String email = principal.getName();
+//        parameter.setEmail(email);
+//
+//        ServiceResult result = memberService.updateMember(parameter);
+//        if (!result.isResult()) {
+//            model.addAttribute("message", result.getMessage());
+//            return "/common/error";
+//        }
+//
+//        return "/order/direct-buy?id=" + productId;
+//    }
 
     @GetMapping("/member/password")
     public String memberPassword(Model model, Principal principal) {

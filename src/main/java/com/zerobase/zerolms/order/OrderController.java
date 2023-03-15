@@ -1,16 +1,17 @@
 package com.zerobase.zerolms.order;
 
 import com.zerobase.zerolms.admin.dto.MemberDto;
+import com.zerobase.zerolms.member.model.MemberInput;
 import com.zerobase.zerolms.member.service.MemberService;
 import com.zerobase.zerolms.product.dto.ProductDto;
 import com.zerobase.zerolms.product.model.ProductParam;
+import com.zerobase.zerolms.product.model.ServiceResult;
 import com.zerobase.zerolms.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 
@@ -23,7 +24,7 @@ public class OrderController {
     private final MemberService memberService;
 
     // 결제 페이지
-    @GetMapping("/direct-buy")
+    @GetMapping("/direct-buy/{id}")
     public String direct(Model model
             , ProductParam parameter
             , Principal principal) {
@@ -35,12 +36,29 @@ public class OrderController {
         model.addAttribute("detail", detail);
         model.addAttribute("productDetail", productDetail);
 
-
         return "/order/direct-buy";
     }
 
-    @PostMapping("/order-complete")
-    public String directComplete(Model model
+    @PostMapping("/direct-buy/{id}")
+    public RedirectView orderInfoUpdate(Model model
+            , MemberInput parameter
+            , Principal principal
+            , @PathVariable Long id) {
+
+        String email = principal.getName();
+        parameter.setEmail(email);
+
+        ServiceResult result = memberService.updateMember(parameter);
+        if (!result.isResult()) {
+            model.addAttribute("message", result.getMessage());
+            return new RedirectView("/common/error", true);
+        }
+
+        return new RedirectView("/order/direct-buy/" + id, true);
+    }
+
+    @PostMapping("/order-basket")
+    public String orderBasket(Model model
             , ProductParam parameter
             , Principal principal) {
 
@@ -61,4 +79,8 @@ public class OrderController {
 
         return "/order/order-buy";
     }
+
+
+
+
 }

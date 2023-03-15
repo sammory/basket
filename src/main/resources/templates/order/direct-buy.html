@@ -20,7 +20,6 @@
                 if (!confirm('회원 정보를 수정하시겠습니까?')) {
                     return false;
                 }
-
             });
 
         });
@@ -29,6 +28,9 @@
 
             $('.payment button').on('click', function () {
                 var url = '/order-complete';
+                var parameter = {
+
+                }
 
                 axios.post(url).then(function (response) {
                     console.log(response);
