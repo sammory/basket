@@ -24,27 +24,58 @@
 
         });
 
-        $(document).ready(function () {
+        function fnCalCount(mode, obj) {
+            var $input = $(obj).parent().find('input[type="text"]');
+            var count = parseInt($input.val());
+            var price = parseInt($('input[name="productPrice"]').val());
 
-            $('.payment button').on('click', function () {
-                var url = '/order-complete';
-                var parameter = {
 
+            if (mode === 'p') {
+                count++;
+            } else {
+                if (count > 1) {
+                    count--;
                 }
+            }
 
-                axios.post(url).then(function (response) {
-                    console.log(response);
-                    console.log(response.data);
+            $input.val(count);
+            var totalPay = count * price;
+            $('#totalPay').val(parseInt(totalPay));
+        }
 
-                    // 서버에서 반환한 응답 처리
-                    // ...
+        $(function () {
 
-                }).catch(function (err) {
-                    console.log(err);
-                });
+            $('#payment').on('submit', function () {
+
+                if (!confirm('결제하시겠습니까?')) {
+                    return false;
+                }
             });
 
+
         });
+
+        // $(document).ready(function () {
+        //
+        //     $('.payment button').on('click', function () {
+        //         var url = '/direct-buy/{id}';
+        //         var parameter = {
+        //
+        //         }
+        //
+        //         axios.post(url).then(function (response) {
+        //             console.log(response);
+        //             console.log(response.data);
+        //
+        //             // 서버에서 반환한 응답 처리
+        //             // ...
+        //
+        //         }).catch(function (err) {
+        //             console.log(err);
+        //         });
+        //     });
+        //
+        // });
 
     </script>
 </head>
@@ -105,7 +136,9 @@
 
     <div>
         <h2>결제정보</h2>
-            <table>
+        <form id="payment" method="post" action="/order/direct-buy/payment">
+
+        <table>
                 <tbody>
                 <tr>
                     <th>상품명</th>
@@ -114,9 +147,21 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>수량</th>
+                    <td>
+                        <div>
+                            <button type="button" onclick="fnCalCount('m', this);">-</button>
+                            <input type="text" name="pop_out" value="1" readonly="readonly" style="text-align:center;"/>
+                            <button type ="button" onclick="fnCalCount('p',this);">+</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
                     <th>총상품가격</th>
                     <td>
-                        <p th:text="${productDetail.salePrice}">가격</p>
+                        <input type="hidden" name="productPrice" th:value="${productDetail.salePrice}"/>
+                        <input id="totalPay" name="totalPay" readonly th:value="${productDetail.salePrice}">원</input>
+                        <input type="hidden" name="id" th:value="${productDetail.id}"/>
                     </td>
                 </tr>
                 <tr>
@@ -125,13 +170,17 @@
                         <p th:text="${detail.cash}">보유캐시</p>
                     </td>
                 </tr>
-
                 </tbody>
             </table>
+
             <div>
-                <button class="payment" type="button">결제하기</button>
+                <button type="submit">결제하기</button>
             </div>
-            <hr/>
+        </form>
+
+        <hr/>
+
+
     </div>
 
 
