@@ -26,7 +26,7 @@ public class OrderController {
 
     // 바로구매 페이지
     @GetMapping("/direct-buy/{id}")
-    public String directOrder(Model model
+    public String directBuy(Model model
             , ProductParam parameter
             , Principal principal) {
 
