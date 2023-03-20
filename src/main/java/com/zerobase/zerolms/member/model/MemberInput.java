@@ -18,5 +18,7 @@ public class MemberInput {
     private String addr;
     private String addrDetail;
     private long cash;
+    private long totalPay;
+
 
 }
