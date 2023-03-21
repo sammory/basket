@@ -17,6 +17,6 @@ public class MemberInput {
     private String zipcode;
     private String addr;
     private String addrDetail;
-
+    private long cash;
 
 }

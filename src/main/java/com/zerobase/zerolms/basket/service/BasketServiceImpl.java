@@ -108,10 +108,9 @@ public class BasketServiceImpl implements BasketService {
         return true;
     }
 
+    // 장바구니 목록 전체합계
     @Override
     public long totalPay(List<BasketDto> list) {
-
-
 
         long totalPay = 0;
         for (BasketDto x : list) {

@@ -51,6 +51,5 @@ public class ProductController extends BaseController {
         return "/product/detail";
     }
 
-
 }
 

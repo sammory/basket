@@ -30,6 +30,7 @@ public class Product {
     long price;
     long salePrice;
     LocalDate saleEndDt;
+    long stock;
 
     LocalDateTime regDt;  // 등록일
     LocalDateTime udtDt;  // 수정일
