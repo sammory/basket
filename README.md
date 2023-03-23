@@ -3,7 +3,7 @@
 
 User : Spring, Jpa, Mariadb, Spring Security
 
-Goal : 상품을 등록하고 성품과 구매자 사이를 중개해 주는 커머스 서버 구축.
+Goal : 상품을 등록하고 상품과 구매자 사이를 중개해 주는 커머스 서버 구축.
 
 ## 회원
 ### 공통
