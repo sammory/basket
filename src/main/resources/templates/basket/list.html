@@ -16,13 +16,9 @@
             text-align: center;
             padding: 100px;
         }
-        .total-pay {
+        .totalPrice {
             text-align: right;
             font-size: x-large;
-            font-weight: bold;
-        }
-        .pay {
-            text-align: center;
             font-weight: bold;
             color: red;
         }
@@ -137,14 +133,17 @@
             </tbody>
         </table>
 
-        <div class="pay">
-            <p class="total-pay">총 주문금액 : <span th:text="${total}"> </span>원</p>
+
+        <div>
+            <p class="totalPrice">총 주문금액 : <span th:text="${total}"> </span>원</p>
         </div>
         <hr/>
-        <div>
             <button type="button" onclick="location.href='/product';" style="float: right">계속쇼핑하기</button>
-            <button type="button" onclick="location.href='/order/order-buy';" style="float: right">주문하기</button>
-        </div>
+        <form method="post" action="/order/basket-buy">
+            <input type="hidden" name="totalPrice" th:value="${total}"/>
+            <button type="submit" style="float: right">주문하기</button>
+        </form>
+
 
     </div>
 

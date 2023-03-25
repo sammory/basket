@@ -1,6 +1,8 @@
 package com.zerobase.zerolms.order.controller;
 
 import com.zerobase.zerolms.admin.dto.MemberDto;
+import com.zerobase.zerolms.basket.dto.BasketDto;
+import com.zerobase.zerolms.basket.service.BasketService;
 import com.zerobase.zerolms.member.model.MemberInput;
 import com.zerobase.zerolms.member.service.MemberService;
 import com.zerobase.zerolms.order.service.OrderService;
@@ -13,7 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,6 +27,7 @@ public class OrderController {
     private final ProductService productService;
     private final MemberService memberService;
     private final OrderService orderService;
+    private final BasketService basketService;
 
     // 바로구매 페이지
     @GetMapping("/direct-buy/{id}")
@@ -40,12 +45,13 @@ public class OrderController {
         return "/order/direct-buy";
     }
 
-    // 바로구매 배송지정보 수정
-    @PostMapping("/direct-buy/{id}")
+    // 구매자 정보수정
+    @PostMapping("/infoUpdate")
     public String orderInfoUpdate(Model model
             , MemberInput parameter
             , Principal principal
-            , @PathVariable Long id) {
+            , @RequestParam Long id
+            , @RequestParam("pageInfo") String pageInfo) {
 
         String email = principal.getName();
         parameter.setEmail(email);
@@ -57,27 +63,55 @@ public class OrderController {
 
         }
 
-        return "redirect:/order/direct-buy/" + id;
+        if (pageInfo.equals("direct")) {
+            // 바로구매 페이지로 리턴
+            return "redirect:/order/direct-buy/" + id;
+        } else {
+            // 장바구니 페이지로 리턴
+            return "redirect:/order/basket-buy";
+        }
     }
 
-    // 바로구매처리
+    // 바로구매처리 기능
     @PostMapping("/direct-buy/payment")
     public String productOrder(Model model
             , MemberInput parameter
             , Principal principal
             , @RequestParam Long id
-            , @RequestParam("totalPay") long totalPay) {
+            , @RequestParam("totalPrice") long totalPrice) {
 
         String email = principal.getName();
         parameter.setEmail(email);
 
-        ServiceResult result = orderService.paymentCash(parameter, totalPay);
+        ServiceResult result = orderService.paymentCash(parameter, totalPrice);
         if (!result.isResult()) {
             model.addAttribute("message", result.getMessage());
             return "common/error";
         }
 
         return "redirect:/order/direct-buy/" + id;
+    }
+
+    // 장바구니 상품구매 페이지
+    @PostMapping("/basket-buy")
+    public String basketTotalPrice(Model model
+            , ProductParam parameter
+            , Principal principal) {
+
+        String email = principal.getName();
+        MemberDto detail = memberService.detail(email);
+        ProductDto productDetail = productService.frontDetail(parameter.getId());
+
+        // 장바구니 목록 총 상품가격
+        List<BasketDto> list = basketService.myBasket(email);
+        long total = basketService.totalPay(list);
+
+        model.addAttribute("detail", detail);
+        model.addAttribute("productDetail", productDetail);
+        model.addAttribute("list", list);
+        model.addAttribute("total", total);
+
+        return "/order/basket-buy";
     }
 
 }
