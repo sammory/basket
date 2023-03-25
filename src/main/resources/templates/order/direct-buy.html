@@ -118,8 +118,10 @@
     <div>
         <h2>결제정보</h2>
         <form id="payment" method="post" action="/order/direct-buy/payment">
+            <input type="hidden" name="pageInfo" th:value="direct"/>
 
-        <table>
+
+            <table>
                 <tbody>
                 <tr>
                     <th>상품명</th>

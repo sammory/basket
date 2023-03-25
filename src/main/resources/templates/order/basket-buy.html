@@ -24,24 +24,6 @@
 
         });
 
-        function fnCalCount(mode, obj) {
-            var $input = $(obj).parent().find('input[type="text"]');
-            var count = parseInt($input.val());
-            var price = parseInt($('input[name="productPrice"]').val());
-
-
-            if (mode === 'p') {
-                count++;
-            } else {
-                if (count > 1) {
-                    count--;
-                }
-            }
-
-            $input.val(count);
-            var totalPrice = count * price;
-            $('#totalPrice').val(parseInt(totalPrice));
-        }
 
         $(function () {
 
@@ -118,6 +100,8 @@
     <div>
         <h2>결제정보</h2>
         <form id="payment" method="post" action="/order/direct-buy/payment">
+            <input type="hidden" name="id" th:value="1"/>
+            <input type="hidden" name="pageInfo" th:value="basket"/>
 
         <table>
                 <tbody>
