@@ -24,24 +24,6 @@
 
         });
 
-        function fnCalCount(mode, obj) {
-            var $input = $(obj).parent().find('input[type="text"]');
-            var count = parseInt($input.val());
-            var price = parseInt($('input[name="productPrice"]').val());
-
-
-            if (mode === 'p') {
-                count++;
-            } else {
-                if (count > 1) {
-                    count--;
-                }
-            }
-
-            $input.val(count);
-            var totalPrice = count * price;
-            $('#totalPrice').val(parseInt(totalPrice));
-        }
 
         $(function () {
 
@@ -66,8 +48,8 @@
     <div>
         <h2>받는사람정보</h2>
         <form id="updateForm" method="post" action="/order/infoUpdate">
-            <input type="hidden" name="id" th:value="${productDetail.id}"/>
-            <input type="hidden" name="pageInfo" th:value="direct"/>
+            <input type="hidden" name="id" th:value="1"/>
+            <input type="hidden" name="pageInfo" th:value="basket"/>
 
             <table>
                 <tbody>
@@ -118,33 +100,21 @@
     <div>
         <h2>결제정보</h2>
         <form id="payment" method="post" action="/order/direct-buy/payment">
-            <input type="hidden" name="pageInfo" th:value="direct"/>
+            <input type="hidden" name="id" th:value="1"/>
+            <input type="hidden" name="pageInfo" th:value="basket"/>
 
-
-            <table>
+        <table>
                 <tbody>
-                <tr>
+                <tr th:each="x, i: ${list}">
                     <th>상품명</th>
                     <td>
-                        <p th:text="${productDetail.subject}">상품명</p>
-                    </td>
-                </tr>
-                <tr>
-                    <th>수량</th>
-                    <td>
-                        <div>
-                            <button type="button" onclick="fnCalCount('m', this);">-</button>
-                            <input type="text" name="pop_out" value="1" readonly="readonly" style="text-align:center;"/>
-                            <button type ="button" onclick="fnCalCount('p',this);">+</button>
-                        </div>
+                        <p th:text="${x.subject}">상품명</p>
                     </td>
                 </tr>
                 <tr>
                     <th>총상품가격</th>
                     <td>
-                        <input type="hidden" name="productPrice" th:value="${productDetail.salePrice}"/>
-                        <input id="totalPrice" name="totalPrice" readonly th:value="${productDetail.salePrice}">원</input>
-                        <input type="hidden" name="id" th:value="${productDetail.id}"/>
+                        <input id="totalPrice" name="totalPrice" readonly th:value="${total}">원</input>
                     </td>
                 </tr>
                 <tr>
