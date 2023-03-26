@@ -139,7 +139,7 @@
         </div>
         <hr/>
             <button type="button" onclick="location.href='/product';" style="float: right">계속쇼핑하기</button>
-        <form method="post" action="/order/basket-buy">
+        <form method="get" action="/order/basket-buy">
             <input type="hidden" name="totalPrice" th:value="${total}"/>
             <button type="submit" style="float: right">주문하기</button>
         </form>

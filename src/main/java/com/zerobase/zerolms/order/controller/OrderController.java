@@ -51,7 +51,7 @@ public class OrderController {
             , MemberInput parameter
             , Principal principal
             , @RequestParam Long id
-            , @RequestParam("pageInfo") String pageInfo) {
+            , @RequestParam("pageDivide") String pageDivide) {
 
         String email = principal.getName();
         parameter.setEmail(email);
@@ -63,7 +63,7 @@ public class OrderController {
 
         }
 
-        if (pageInfo.equals("direct")) {
+        if (pageDivide.equals("direct")) {
             // 바로구매 페이지로 리턴
             return "redirect:/order/direct-buy/" + id;
         } else {
@@ -79,7 +79,7 @@ public class OrderController {
             , Principal principal
             , @RequestParam Long id
             , @RequestParam("totalPrice") long totalPrice
-            , @RequestParam("pageInfo") String pageInfo) {
+            , @RequestParam("pageDivide") String pageDivide) {
 
         String email = principal.getName();
         parameter.setEmail(email);
@@ -90,7 +90,7 @@ public class OrderController {
             return "common/error";
         }
 
-        if (pageInfo.equals("direct")) {
+        if (pageDivide.equals("direct")) {
             // 바로구매 페이지로 리턴
             return "redirect:/order/direct-buy/" + id;
         } else {
@@ -101,8 +101,8 @@ public class OrderController {
     }
 
     // 장바구니 상품구매 페이지
-    @RequestMapping(value = "/basket-buy")
-    public String basketTotalPrice(Model model
+    @GetMapping("/basket-buy")
+    public String basketTotalPayment(Model model
             , ProductParam parameter
             , Principal principal) {
 
