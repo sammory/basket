@@ -67,7 +67,7 @@
         <h2>받는사람정보</h2>
         <form id="updateForm" method="post" action="/order/infoUpdate">
             <input type="hidden" name="id" th:value="${productDetail.id}"/>
-            <input type="hidden" name="pageInfo" th:value="direct"/>
+            <input type="hidden" name="pageDivide" th:value="direct"/>
 
             <table>
                 <tbody>
@@ -118,7 +118,7 @@
     <div>
         <h2>결제정보</h2>
         <form id="payment" method="post" action="/order/direct-buy/payment">
-            <input type="hidden" name="pageInfo" th:value="direct"/>
+            <input type="hidden" name="pageDivide" th:value="direct"/>
 
 
             <table>
