@@ -23,5 +23,5 @@ Goal : 상품을 등록하고 상품과 구매자 사이를 중개해 주는 커
 
 ### 프로젝트 화면 구성도
 <p align="center">
-  <img src="![Untitled](https://user-images.githubusercontent.com/113747023/232968808-bcd27ab3-0c04-4efa-b7ae-d2391db57023.png)">
+  <img src="https://user-images.githubusercontent.com/113747023/232968808-bcd27ab3-0c04-4efa-b7ae-d2391db57023.png">
 </p>
