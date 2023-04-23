@@ -14,6 +14,6 @@ public interface BasketRepository extends JpaRepository<Basket, Long> {
 
     long countByProductIdAndEmailAndStatusIn(long productId, String email, Collection<String> statusList);
 
-    @Transactional
+//    @Transactional
     void deleteByProductId(long productId);
 }

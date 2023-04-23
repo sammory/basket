@@ -1,13 +1,10 @@
 package com.zerobase.zerolms.basket.controller;
 
-import com.zerobase.zerolms.admin.repository.CategoryService;
 import com.zerobase.zerolms.basket.model.BasketInput;
 import com.zerobase.zerolms.basket.service.BasketService;
 import com.zerobase.zerolms.common.model.ResponseResult;
 import com.zerobase.zerolms.product.controller.BaseController;
 import com.zerobase.zerolms.product.model.ServiceResult;
-import com.zerobase.zerolms.product.model.TakeProductInput;
-import com.zerobase.zerolms.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
